@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compare Your Enough Numbers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    :root {
+      --bg:       #faf7f2;
+      --surface:  #ffffff;
+      --surface2: #f3efe8;
+      --border:   #e8e0d5;
+      --text:     #1e1e1e;
+      --muted:    #7a8499;
+      --gold:     #a0622a;
+      --gold-dim: #c4956a;
+      --shadow:   0 4px 24px rgba(0,0,0,0.07);
+    }
+ 
+    html { scroll-behavior: smooth; }
+ 
+    body {
+      background: var(--bg);
+      font-family: 'Jost', sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      padding: 0 0 5rem;
+    }
+ 
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+ 
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(160,98,42,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+ 
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+ 
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 600;
+      line-height: 1.15;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+    }
+ 
+    .hero h1 em { font-style: italic; color: var(--gold); }
+ 
+    .hero p {
+      font-size: 1rem;
+      color: var(--muted);
+      font-weight: 300;
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+ 
+    /* ── Page layout ── */
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+ 
+    .section-label {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.9rem;
+    }
+ 
+    .field {
+      margin-bottom: 1.1rem;
+    }
+ 
+    .field label {
+      display: block;
+      font-size: 0.74rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+ 
+    .field-hint {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-weight: 300;
+      margin-top: 0.35rem;
+      line-height: 1.5;
+    }
+ 
+    .input-wrap {
+      position: relative;
+    }
+ 
+    .input-prefix {
+      position: absolute;
+      left: 0.9rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.95rem;
+      color: var(--muted);
+      pointer-events: none;
+    }
+ 
+    .input-wrap input {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.65rem 1rem 0.65rem 2rem;
+      font-family: 'Jost', sans-serif;
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+ 
+    .input-wrap input::placeholder {
+      color: #ccc5bb;
+    }
+ 
+    .input-wrap input:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(160,98,42,0.1);
+    }
+ 
+    .input-suffix {
+      position: absolute;
+      right: 0.9rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.75rem;
+      color: var(--muted);
+      pointer-events: none;
+    }
+ 
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 1.4rem 0;
+    }
+ 
+    .calc-btn {
+      width: 100%;
+      padding: 0.85rem;
+      margin-top: 0.5rem;
+      background: var(--gold);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(160,98,42,0.2);
+    }
+ 
+    .calc-btn:hover { background: #b5742f; box-shadow: 0 6px 28px rgba(160,98,42,0.28); }
+    .calc-btn:active { transform: scale(0.98); }
+ 
+    .tax-note {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 0.75rem;
+      font-weight: 300;
+      line-height: 1.5;
+    }
+ 
+    /* ── Scenario cards row ── */
+    .scenarios-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      align-items: start;
+      margin-bottom: 1.5rem;
+    }
+ 
+    .scenario-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+    }
+ 
+    .scenario-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 1.1rem;
+    }
+ 
+    .scenario-name-input {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text);
+      border: none;
+      background: none;
+      width: 100%;
+      padding: 0.15rem 0;
+      border-bottom: 1px solid transparent;
+    }
+ 
+    .scenario-name-input:hover,
+    .scenario-name-input:focus {
+      outline: none;
+      border-bottom: 1px solid var(--border);
+    }
+ 
+    .remove-btn {
+      border: none;
+      background: none;
+      color: var(--gold);
+      font-size: 1.4rem;
+      line-height: 1;
+      cursor: pointer;
+      flex-shrink: 0;
+      padding: 0 0.25rem;
+      opacity: 0.75;
+    }
+    .remove-btn:hover { opacity: 1; }
+ 
+    .mini-result {
+      margin-top: 0.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+ 
+    .mini-result-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
+ 
+    .mini-result-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+ 
+    .mini-result-sub {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-weight: 300;
+      margin-top: 0.3rem;
+    }
+ 
+    .duplicate-btn {
+      width: 100%;
+      margin-top: 0.85rem;
+      padding: 0.55rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--gold);
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .duplicate-btn:hover { border-color: var(--gold); }
+ 
+    .add-scenario-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      border: 1.5px dashed var(--border);
+      border-radius: 20px;
+      background: none;
+      min-height: 280px;
+      color: var(--muted);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .add-scenario-card:hover { border-color: var(--gold); color: var(--gold); }
+    .add-scenario-card .icon { font-size: 1.8rem; font-weight: 300; }
+ 
+    .compare-btn-wrap { max-width: 420px; margin: 0 auto 1rem; }
+ 
+    /* ── Results panel ── */
+    .results-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin-top: 2.5rem;
+    }
+ 
+    .empty-state {
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: 20px;
+      padding: 3rem 2rem;
+      text-align: center;
+      color: var(--muted);
+    }
+    .empty-state .icon { font-size: 2.5rem; margin-bottom: 1rem; opacity: 0.4; }
+    .empty-state p { font-size: 0.9rem; line-height: 1.6; font-weight: 300; }
+ 
+    .enough-card, .breakdown-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+    .enough-card.visible, .breakdown-card.visible { opacity: 1; transform: translateY(0); }
+ 
+    .enough-eyebrow {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+      text-align: center;
+    }
+ 
+    .enough-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+ 
+    /* Bar chart, built from existing tokens only */
+    .bars-wrap {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 2.5rem;
+      height: 220px;
+      padding: 0 1rem;
+      overflow-x: auto;
+    }
+    .bar-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 90px;
+      height: 100%;
+    }
+    .bar-amount {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .bar-track {
+      flex: 1;
+      width: 46px;
+      display: flex;
+      align-items: flex-end;
+    }
+    .bar-fill { width: 100%; border-radius: 6px 6px 0 0; transition: height 0.4s ease; min-height: 2px; }
+    .bar-ground { width: 100%; height: 2px; background: var(--text); opacity: 0.12; }
+    .bar-label {
+      margin-top: 0.6rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text);
+      text-align: center;
+    }
+ 
+    .breakdown-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 1.1rem;
+    }
+ 
+    .gap-summary {
+      font-size: 0.9rem;
+      color: var(--text);
+      font-weight: 300;
+      line-height: 1.6;
+      margin-bottom: 1.4rem;
+    }
+    .gap-summary strong { font-weight: 600; }
+ 
+    .breakdown-rows { display: flex; flex-direction: column; gap: 0.5rem; }
+ 
+    .brow {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 0.85rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .brow:last-child { border-bottom: none; }
+    .brow-label { color: var(--muted); font-weight: 300; }
+    .brow-val { font-weight: 500; color: var(--text); }
+ 
+    .driver-row {
+      padding: 0.55rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .driver-row:last-child { border-bottom: none; }
+    .driver-row-top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+    .driver-name {
+      font-size: 0.85rem;
+      color: var(--text);
+      font-weight: 500;
+    }
+    .driver-value {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 300;
+      flex-shrink: 0;
+    }
+    .driver-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 0.9rem;
+      margin-top: 0.4rem;
+      padding-left: 0;
+    }
+    .driver-chip {
+      font-size: 0.74rem;
+      color: var(--muted);
+      font-weight: 300;
+    }
+    .driver-chip strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+ 
+    /* ── Page footer disclaimer ── */
+    .page-disclaimer {
+      max-width: 1100px;
+      margin: 3rem auto 0;
+      padding: 0 1.5rem;
+      font-size: 0.72rem;
+      font-style: italic;
+      color: #b0a898;
+      font-weight: 300;
+      line-height: 1.6;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+    }
+ 
+    @media (max-width: 640px) {
+      .bars-wrap { gap: 1.25rem; }
+      .driver-value { width: 100px; }
+    }
+  </style>
+</head>
+<body>
+ 
+<div class="hero">
+  <div class="hero-eyebrow">Compare Your Enough Numbers</div>
+  <h1>Which of your <em>enough</em> numbers best fits your life?</h1>
+  <p>Build up to three scenarios — your current lifestyle and the changes you're weighing — and see the income that each requires, side by side.</p>
+</div>
+ 
+<div class="page">
+ 
+  <div class="section-label" style="text-align:center; margin-bottom: 1rem;">Your Scenarios</div>
+ 
+  <div class="scenarios-row" id="scenariosRow"></div>
+ 
+  <div class="compare-btn-wrap">
+    <button class="calc-btn" onclick="compareScenarios()">Compare My Enough Numbers →</button>
+    <div class="tax-note">Taxes estimated using 2026 US federal brackets (married filing jointly), per IRS Revenue Procedure 2025-32. A 5% state income tax is added as a rough national average — actual state taxes vary. No state income tax applies in AK, FL, NV, NH, SD, TN, TX, WA, and WY. This estimate does not account for child tax credits or childcare tax credits, which may reduce your tax liability.</div>
+  </div>
+ 
+  <div class="results-panel" id="resultsPanel">
+    <div class="empty-state">
+      <div class="icon">◎</div>
+      <p>Fill in each scenario's monthly expenses,<br>then click <strong>Compare My Enough Numbers</strong>.</p>
+    </div>
+  </div>
+ 
+</div>
+ 
+<p class="page-disclaimer">This calculator is for educational purposes only and does not constitute financial advice. Individual financial situations vary, and readers should consider consulting a qualified financial professional before making major financial decisions.</p>
+ 
+<script>
+  // ── 2026 Federal tax: married filing jointly (IRS Rev. Proc. 2025-32) ──
+  const STANDARD_DEDUCTION = 32200;
+  const STATE_RATE = 0.05;
+ 
+  const BRACKETS = [
+    { limit: 24800,    rate: 0.10 },
+    { limit: 100800,   rate: 0.12 },
+    { limit: 211400,   rate: 0.22 },
+    { limit: 403550,   rate: 0.24 },
+    { limit: 512450,   rate: 0.32 },
+    { limit: 768700,   rate: 0.35 },
+    { limit: Infinity, rate: 0.37 },
+  ];
+ 
+  function federalTax(taxable) {
+    if (taxable <= 0) return 0;
+    let tax = 0, prev = 0;
+    for (const b of BRACKETS) {
+      if (taxable <= prev) break;
+      tax += (Math.min(taxable, b.limit) - prev) * b.rate;
+      prev = b.limit;
+    }
+    return tax;
+  }
+ 
+  function totalTaxFromGross(gross) {
+    const taxable = Math.max(0, gross - STANDARD_DEDUCTION);
+    return federalTax(taxable) + gross * STATE_RATE;
+  }
+ 
+  function grossFromNet(netNeeded) {
+    if (netNeeded <= 0) return 0;
+    let lo = netNeeded, hi = netNeeded * 3;
+    for (let i = 0; i < 60; i++) {
+      const mid = (lo + hi) / 2;
+      const net = mid - totalTaxFromGross(mid);
+      if (net < netNeeded) lo = mid; else hi = mid;
+    }
+    return (lo + hi) / 2;
+  }
+ 
+  function effectiveRate(gross) {
+    if (gross <= 0) return 0;
+    return (totalTaxFromGross(gross) / gross) * 100;
+  }
+ 
+  function fmt(n) {
+    return '$' + Math.round(Math.abs(n)).toLocaleString();
+  }
+ 
+  // ── Scenario state ──────────────────────────────────────────────────
+  const FIELDS = [
+    { key: 'housing', label: 'Housing', hint: 'Rent/mortgage, utilities, property taxes, insurance, maintenance', placeholder: '1,500' },
+    { key: 'food', label: 'Food', hint: 'Groceries and takeout', placeholder: '600' },
+    { key: 'transport', label: 'Transportation', hint: 'Gas, insurance, maintenance, car payments', placeholder: '400' },
+    { key: 'childcare', label: 'Childcare', hint: '', placeholder: '800' },
+    { key: 'other', label: 'Other Monthly Expenses', hint: "Healthcare, retirement savings, clothing, kids' activities, subscriptions, gifts", placeholder: '500' },
+  ];
+ 
+  const BAR_COLORS = ['var(--gold)', 'var(--gold-dim)', 'var(--muted)'];
+ 
+  let nextId = 2;
+  let scenarios = [makeScenario('Current')];
+ 
+  function makeScenario(name, values) {
+    const s = { id: 'scn' + (nextId++), name: name };
+    FIELDS.forEach(f => { s[f.key] = values ? values[f.key] : ''; });
+    return s;
+  }
+ 
+  function renderScenarios() {
+    const row = document.getElementById('scenariosRow');
+    row.innerHTML = scenarios.map(s => scenarioCardHtml(s)).join('') + (scenarios.length < 3 ? addCardHtml() : '');
+  }
+ 
+  function scenarioCardHtml(s) {
+    const fieldsHtml = FIELDS.map(f => `
+      <div class="field">
+        <label>${f.label}</label>
+        ${f.hint ? `<div class="field-hint">${f.hint}</div>` : ''}
+        <div class="input-wrap">
+          <span class="input-prefix">$</span>
+          <input type="number" min="0" placeholder="${f.placeholder}"
+                 value="${s[f.key]}"
+                 oninput="updateValue('${s.id}','${f.key}',this.value)" />
+          <span class="input-suffix">/ mo</span>
+        </div>
+      </div>
+    `).join('');
+ 
+    return `
+      <div class="scenario-card" id="card-${s.id}">
+        <div class="scenario-header">
+          <input class="scenario-name-input" value="${s.name}" oninput="updateName('${s.id}',this.value)" aria-label="Scenario name" />
+          ${scenarios.length > 1 ? `<button class="remove-btn" onclick="removeScenario('${s.id}')" title="Remove">×</button>` : ''}
+        </div>
+        ${fieldsHtml}
+        <div class="mini-result" id="mini-${s.id}" style="display:none;">
+          <div class="mini-result-label">Enough number (gross)</div>
+          <div class="mini-result-value" id="mini-val-${s.id}"></div>
+          <div class="mini-result-sub" id="mini-sub-${s.id}"></div>
+        </div>
+        ${scenarios.length < 3 ? `<button class="duplicate-btn" onclick="duplicateScenario('${s.id}')">Duplicate this scenario</button>` : ''}
+      </div>
+    `;
+  }
+ 
+  function addCardHtml() {
+    return `
+      <button class="add-scenario-card" onclick="addScenario()">
+        <span class="icon">+</span>
+        <span>Add a scenario</span>
+      </button>
+    `;
+  }
+ 
+  function updateValue(id, key, val) {
+    const s = scenarios.find(sc => sc.id === id);
+    if (s) s[key] = val;
+  }
+ 
+  function updateName(id, name) {
+    const s = scenarios.find(sc => sc.id === id);
+    if (s) s.name = name;
+  }
+ 
+  function addScenario() {
+    if (scenarios.length >= 3) return;
+    scenarios.push(makeScenario('Scenario ' + (scenarios.length + 1)));
+    renderScenarios();
+  }
+ 
+  function duplicateScenario(id) {
+    if (scenarios.length >= 3) return;
+    const src = scenarios.find(sc => sc.id === id);
+    if (!src) return;
+    scenarios.push(makeScenario('Copy of ' + src.name, src));
+    renderScenarios();
+  }
+ 
+  function removeScenario(id) {
+    if (scenarios.length <= 1) return;
+    scenarios = scenarios.filter(sc => sc.id !== id);
+    renderScenarios();
+  }
+ 
+  // ── Compare ─────────────────────────────────────────────────────────
+  function compareScenarios() {
+    const computed = scenarios.map(s => {
+      const monthlyTotal = FIELDS.reduce((sum, f) => sum + (parseFloat(s[f.key]) || 0), 0);
+      const annualNet = monthlyTotal * 12;
+      const grossAnnual = grossFromNet(annualNet);
+      const grossMonthly = grossAnnual / 12;
+      const effRate = effectiveRate(grossAnnual);
+      return { ...s, monthlyTotal, annualNet, grossAnnual, grossMonthly, effRate };
+    });
+ 
+    if (computed.every(c => c.monthlyTotal === 0)) {
+      alert('Please enter at least one monthly expense in at least one scenario.');
+      return;
+    }
+ 
+    // Update mini results inline on each card
+    computed.forEach(c => {
+      const mini = document.getElementById('mini-' + c.id);
+      const val = document.getElementById('mini-val-' + c.id);
+      const sub = document.getElementById('mini-sub-' + c.id);
+      if (mini && val && sub) {
+        mini.style.display = 'block';
+        val.textContent = c.grossAnnual > 0 ? fmt(c.grossMonthly) + '/mo' : '—';
+        sub.textContent = c.grossAnnual > 0
+          ? fmt(c.grossAnnual) + '/yr · ~' + c.effRate.toFixed(1) + '% est. tax'
+          : '';
+      }
+    });
+ 
+    renderResultsPanel(computed);
+  }
+ 
+  function renderResultsPanel(computed) {
+    const panel = document.getElementById('resultsPanel');
+    panel.innerHTML = '';
+ 
+    const maxGross = Math.max(1, ...computed.map(c => c.grossAnnual));
+ 
+    const barsHtml = computed.map((c, i) => {
+      const heightPct = maxGross > 0 ? (c.grossAnnual / maxGross) * 100 : 0;
+      return `
+        <div class="bar-col">
+          <div class="bar-amount">${c.grossAnnual > 0 ? fmt(c.grossMonthly) + '/mo' : '—'}</div>
+          <div class="bar-track">
+            <div class="bar-fill" style="height:${heightPct}%; background:${BAR_COLORS[i % BAR_COLORS.length]};"></div>
+          </div>
+          <div class="bar-ground"></div>
+          <div class="bar-label">${c.name || 'Untitled'}</div>
+        </div>
+      `;
+    }).join('');
+ 
+    const barsCard = document.createElement('div');
+    barsCard.className = 'enough-card';
+    barsCard.innerHTML = `
+      <div class="enough-eyebrow">The Comparison</div>
+      <div class="enough-label">Gross income needed, by scenario</div>
+      <div class="bars-wrap">${barsHtml}</div>
+    `;
+    panel.appendChild(barsCard);
+    setTimeout(() => barsCard.classList.add('visible'), 30);
+ 
+    // Overall spread across ALL scenarios (not just a high/low pair)
+    if (computed.length > 1) {
+      let high = computed[0], low = computed[0];
+      computed.forEach(c => {
+        if (c.grossAnnual > high.grossAnnual) high = c;
+        if (c.grossAnnual < low.grossAnnual) low = c;
+      });
+ 
+      if (high.id !== low.id) {
+        const monthlySpread = high.monthlyTotal - low.monthlyTotal;
+        const annualSpread = high.grossAnnual - low.grossAnnual;
+ 
+        // For each category, look at every scenario's value (not just the two extremes)
+        // so a category that varies across all three shows up, even if it isn't what
+        // separates the single highest and lowest scenario.
+        const drivers = FIELDS.map(f => {
+          const vals = computed.map(c => ({ name: c.name, val: parseFloat(c[f.key]) || 0 }));
+          const maxVal = Math.max(...vals.map(v => v.val));
+          const minVal = Math.min(...vals.map(v => v.val));
+          return { label: f.label, vals: vals, range: maxVal - minVal };
+        }).filter(d => d.range > 0.001)
+          .sort((a, b) => b.range - a.range);
+ 
+        const driverRowsHtml = drivers.slice(0, 5).map(d => {
+          const valuesHtml = d.vals
+            .map(v => `<span class="driver-chip">${v.name || 'Untitled'} <strong>${fmt(v.val)}</strong></span>`)
+            .join('');
+          return `
+            <div class="driver-row">
+              <div class="driver-row-top">
+                <span class="driver-name">${d.label}</span>
+                <span class="driver-value">${fmt(d.range)}/mo range</span>
+              </div>
+              <div class="driver-chips">${valuesHtml}</div>
+            </div>
+          `;
+        }).join('');
+ 
+        const breakdownCard = document.createElement('div');
+        breakdownCard.className = 'breakdown-card';
+        breakdownCard.innerHTML = `
+          <div class="breakdown-title">What's driving the differences</div>
+          <div class="gap-summary">
+            Across your scenarios, the gross income needed ranges from <strong>${fmt(low.grossMonthly)}/mo</strong>
+            (${low.name}) to <strong>${fmt(high.grossMonthly)}/mo</strong> (${high.name}) — a spread of
+            <strong>${fmt(monthlySpread)}/mo</strong>, or about <strong>${fmt(annualSpread)}/yr</strong>.
+            Here's how every scenario compares, category by category:
+          </div>
+          <div class="breakdown-rows">${driverRowsHtml}</div>
+        `;
+        panel.appendChild(breakdownCard);
+        setTimeout(() => breakdownCard.classList.add('visible'), 80);
+      }
+    }
+  }
+ 
+  renderScenarios();
+</script>
+ 
+</body>
+</html>
