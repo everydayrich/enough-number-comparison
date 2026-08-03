@@ -4,32 +4,47 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Compare Your Enough Numbers</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lexend:wght@300;400;500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
- 
+
     :root {
-      --bg:       #faf7f2;
-      --surface:  #ffffff;
-      --surface2: #f3efe8;
-      --border:   #e8e0d5;
-      --text:     #1e1e1e;
-      --muted:    #7a8499;
-      --gold:     #a0622a;
-      --gold-dim: #c4956a;
-      --shadow:   0 4px 24px rgba(0,0,0,0.07);
+      /* core */
+      --bg:        #F3E6D5;
+      --surface:   #FFFFFF;
+      --surface2:  #FBF3E4;
+      --border:    #E5D3B4;
+      --text:      #1F2427;
+      --muted:     #5E7A78;
+
+      /* accent & semantic */
+      --marigold:  #EB9532;
+      --terracotta:#D84233;
+      --dusty-blue:#75A2A8;
+      --olive:     #3A3F21;
+      --salmon:    #E6A192;
+      --espresso:  #4D2C1D;
+
+      --radius-sm:   8px;
+      --radius-md:   14px;
+      --radius-lg:   20px;
+      --radius-pill: 999px;
+
+      --shadow: 0 4px 24px rgba(31,36,39,0.07);
     }
- 
+
     html { scroll-behavior: smooth; }
- 
+
     body {
       background: var(--bg);
-      font-family: 'Jost', sans-serif;
+      font-family: 'Lexend', sans-serif;
       color: var(--text);
       min-height: 100vh;
       padding: 0 0 5rem;
+      -webkit-font-smoothing: antialiased;
     }
- 
+
     /* ── Hero ── */
     .hero {
       text-align: center;
@@ -37,87 +52,99 @@
       position: relative;
       overflow: hidden;
     }
- 
+
     .hero::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(160,98,42,0.06) 0%, transparent 70%);
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(216,66,51,0.06) 0%, transparent 70%);
       pointer-events: none;
     }
- 
-    .hero-eyebrow {
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1rem;
-      font-weight: 500;
+
+    .hero-logo {
+      max-width: 220px;
+      width: 100%;
+      height: auto;
+      margin: 0 auto 1.5rem;
+      display: block;
+      position: relative;
     }
- 
+
+    .hero-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
     .hero h1 {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Lora', serif;
       font-size: clamp(2rem, 5vw, 3.4rem);
-      font-weight: 600;
+      font-weight: 700;
       line-height: 1.15;
       color: var(--text);
       letter-spacing: -0.01em;
       margin-bottom: 1rem;
     }
- 
-    .hero h1 em { font-style: italic; color: var(--gold); }
- 
+
+    .hero h1 em { font-style: italic; color: var(--terracotta); }
+
     .hero p {
       font-size: 1rem;
       color: var(--muted);
-      font-weight: 300;
+      font-weight: 400;
       max-width: 520px;
       margin: 0 auto;
       line-height: 1.7;
     }
- 
+
     /* ── Page layout ── */
     .page {
       max-width: 1100px;
       margin: 0 auto;
       padding: 0 1.5rem;
     }
- 
+
     .section-label {
+      font-family: 'Inter', sans-serif;
       font-size: 0.68rem;
-      font-weight: 500;
-      letter-spacing: 0.16em;
+      font-weight: 700;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--terracotta);
       margin-bottom: 0.9rem;
     }
- 
+
     .field {
       margin-bottom: 1.1rem;
     }
- 
+
     .field label {
       display: block;
+      font-family: 'Inter', sans-serif;
       font-size: 0.74rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
+      font-weight: 600;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--muted);
       margin-bottom: 0.4rem;
     }
- 
+
     .field-hint {
       font-size: 0.72rem;
       color: var(--muted);
-      font-weight: 300;
+      font-weight: 400;
       margin-top: 0.35rem;
       line-height: 1.5;
     }
- 
+
     .input-wrap {
       position: relative;
     }
- 
+
     .input-prefix {
       position: absolute;
       left: 0.9rem;
@@ -127,30 +154,30 @@
       color: var(--muted);
       pointer-events: none;
     }
- 
+
     .input-wrap input {
       width: 100%;
       background: var(--surface2);
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: var(--radius-sm);
       padding: 0.65rem 1rem 0.65rem 2rem;
-      font-family: 'Jost', sans-serif;
+      font-family: 'Lexend', sans-serif;
       font-size: 1rem;
       font-weight: 400;
       color: var(--text);
       transition: border-color 0.2s, box-shadow 0.2s;
     }
- 
+
     .input-wrap input::placeholder {
-      color: #ccc5bb;
+      color: #cbb896;
     }
- 
+
     .input-wrap input:focus {
       outline: none;
-      border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(160,98,42,0.1);
+      border-color: var(--terracotta);
+      box-shadow: 0 0 0 3px rgba(216,66,51,0.1);
     }
- 
+
     .input-suffix {
       position: absolute;
       right: 0.9rem;
@@ -160,42 +187,44 @@
       color: var(--muted);
       pointer-events: none;
     }
- 
+
     .divider {
       height: 1px;
       background: var(--border);
       margin: 1.4rem 0;
     }
- 
+
     .calc-btn {
       width: 100%;
       padding: 0.85rem;
       margin-top: 0.5rem;
-      background: var(--gold);
-      color: #fff;
+      background: var(--marigold);
+      color: var(--espresso);
       border: none;
-      border-radius: 10px;
-      font-family: 'Jost', sans-serif;
+      border-radius: var(--radius-pill);
+      font-family: 'Lexend', sans-serif;
       font-size: 0.95rem;
-      font-weight: 500;
-      letter-spacing: 0.05em;
+      font-weight: 700;
+      letter-spacing: 0.02em;
       cursor: pointer;
       transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
-      box-shadow: 0 4px 20px rgba(160,98,42,0.2);
+      box-shadow: 0 4px 20px rgba(235,149,50,0.25);
     }
- 
-    .calc-btn:hover { background: #b5742f; box-shadow: 0 6px 28px rgba(160,98,42,0.28); }
+
+    .calc-btn:hover { background: #d6842c; box-shadow: 0 6px 28px rgba(235,149,50,0.32); }
     .calc-btn:active { transform: scale(0.98); }
- 
+
     .tax-note {
+      font-family: 'Inter', sans-serif;
       font-size: 0.72rem;
+      font-style: italic;
       color: var(--muted);
       text-align: center;
       margin-top: 0.75rem;
-      font-weight: 300;
+      font-weight: 400;
       line-height: 1.5;
     }
- 
+
     /* ── Scenario cards row ── */
     .scenarios-row {
       display: grid;
@@ -204,15 +233,15 @@
       align-items: start;
       margin-bottom: 1.5rem;
     }
- 
+
     .scenario-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 20px;
+      border-radius: var(--radius-lg);
       padding: 2rem;
       box-shadow: var(--shadow);
     }
- 
+
     .scenario-header {
       display: flex;
       align-items: center;
@@ -220,9 +249,9 @@
       gap: 0.5rem;
       margin-bottom: 1.1rem;
     }
- 
+
     .scenario-name-input {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Lora', serif;
       font-size: 1.3rem;
       font-weight: 600;
       color: var(--text);
@@ -232,17 +261,17 @@
       padding: 0.15rem 0;
       border-bottom: 1px solid transparent;
     }
- 
+
     .scenario-name-input:hover,
     .scenario-name-input:focus {
       outline: none;
       border-bottom: 1px solid var(--border);
     }
- 
+
     .remove-btn {
       border: none;
       background: none;
-      color: var(--gold);
+      color: var(--terracotta);
       font-size: 1.4rem;
       line-height: 1;
       cursor: pointer;
@@ -251,53 +280,55 @@
       opacity: 0.75;
     }
     .remove-btn:hover { opacity: 1; }
- 
+
     .mini-result {
       margin-top: 0.5rem;
       padding-top: 1rem;
       border-top: 1px solid var(--border);
       text-align: center;
     }
- 
+
     .mini-result-label {
+      font-family: 'Inter', sans-serif;
       font-size: 0.68rem;
-      letter-spacing: 0.1em;
+      font-weight: 600;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--muted);
       margin-bottom: 0.3rem;
     }
- 
+
     .mini-result-value {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Lora', serif;
       font-size: 1.7rem;
       font-weight: 700;
-      color: var(--gold);
+      color: var(--terracotta);
       line-height: 1;
     }
- 
+
     .mini-result-sub {
       font-size: 0.72rem;
       color: var(--muted);
-      font-weight: 300;
+      font-weight: 400;
       margin-top: 0.3rem;
     }
- 
+
     .duplicate-btn {
       width: 100%;
       margin-top: 0.85rem;
       padding: 0.55rem;
       background: var(--surface2);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      font-family: 'Jost', sans-serif;
+      border-radius: var(--radius-pill);
+      font-family: 'Lexend', sans-serif;
       font-size: 0.82rem;
-      font-weight: 500;
-      color: var(--gold);
+      font-weight: 600;
+      color: var(--terracotta);
       cursor: pointer;
       transition: border-color 0.2s;
     }
-    .duplicate-btn:hover { border-color: var(--gold); }
- 
+    .duplicate-btn:hover { border-color: var(--terracotta); }
+
     .add-scenario-card {
       display: flex;
       flex-direction: column;
@@ -305,21 +336,21 @@
       justify-content: center;
       gap: 0.5rem;
       border: 1.5px dashed var(--border);
-      border-radius: 20px;
+      border-radius: var(--radius-lg);
       background: none;
       min-height: 280px;
       color: var(--muted);
-      font-family: 'Jost', sans-serif;
+      font-family: 'Lexend', sans-serif;
       font-size: 0.85rem;
       font-weight: 500;
       cursor: pointer;
       transition: border-color 0.2s, color 0.2s;
     }
-    .add-scenario-card:hover { border-color: var(--gold); color: var(--gold); }
+    .add-scenario-card:hover { border-color: var(--terracotta); color: var(--terracotta); }
     .add-scenario-card .icon { font-size: 1.8rem; font-weight: 300; }
- 
+
     .compare-btn-wrap { max-width: 420px; margin: 0 auto 1rem; }
- 
+
     /* ── Results panel ── */
     .results-panel {
       display: flex;
@@ -327,47 +358,49 @@
       gap: 1.25rem;
       margin-top: 2.5rem;
     }
- 
+
     .empty-state {
       background: var(--surface);
       border: 1px dashed var(--border);
-      border-radius: 20px;
+      border-radius: var(--radius-lg);
       padding: 3rem 2rem;
       text-align: center;
       color: var(--muted);
     }
-    .empty-state .icon { font-size: 2.5rem; margin-bottom: 1rem; opacity: 0.4; }
-    .empty-state p { font-size: 0.9rem; line-height: 1.6; font-weight: 300; }
- 
+    .empty-state .icon { font-size: 2.5rem; margin-bottom: 1rem; opacity: 0.4; color: var(--terracotta); }
+    .empty-state p { font-size: 0.9rem; line-height: 1.6; font-weight: 400; }
+
     .enough-card, .breakdown-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 20px;
+      border-radius: var(--radius-lg);
       padding: 2rem;
       opacity: 0;
       transform: translateY(12px);
       transition: opacity 0.45s ease, transform 0.45s ease;
     }
     .enough-card.visible, .breakdown-card.visible { opacity: 1; transform: translateY(0); }
- 
+
     .enough-eyebrow {
+      font-family: 'Inter', sans-serif;
       font-size: 0.68rem;
-      letter-spacing: 0.16em;
+      font-weight: 700;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--muted);
       margin-bottom: 0.4rem;
       text-align: center;
     }
- 
+
     .enough-label {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Lora', serif;
       font-size: 1.3rem;
       font-weight: 600;
       color: var(--text);
       margin-bottom: 1.5rem;
       text-align: center;
     }
- 
+
     /* Bar chart, built from existing tokens only */
     .bars-wrap {
       display: flex;
@@ -386,7 +419,7 @@
       height: 100%;
     }
     .bar-amount {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Lora', serif;
       font-size: 1.05rem;
       font-weight: 600;
       color: var(--text);
@@ -407,26 +440,26 @@
       color: var(--text);
       text-align: center;
     }
- 
+
     .breakdown-title {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Lora', serif;
       font-size: 1.15rem;
       font-weight: 600;
       color: var(--text);
       margin-bottom: 1.1rem;
     }
- 
+
     .gap-summary {
       font-size: 0.9rem;
       color: var(--text);
-      font-weight: 300;
+      font-weight: 400;
       line-height: 1.6;
       margin-bottom: 1.4rem;
     }
-    .gap-summary strong { font-weight: 600; }
- 
+    .gap-summary strong { font-weight: 700; }
+
     .breakdown-rows { display: flex; flex-direction: column; gap: 0.5rem; }
- 
+
     .brow {
       display: flex;
       justify-content: space-between;
@@ -436,9 +469,9 @@
       border-bottom: 1px solid var(--border);
     }
     .brow:last-child { border-bottom: none; }
-    .brow-label { color: var(--muted); font-weight: 300; }
-    .brow-val { font-weight: 500; color: var(--text); }
- 
+    .brow-label { color: var(--muted); font-weight: 400; }
+    .brow-val { font-weight: 600; color: var(--text); }
+
     .driver-row {
       padding: 0.55rem 0;
       border-bottom: 1px solid var(--border);
@@ -453,12 +486,12 @@
     .driver-name {
       font-size: 0.85rem;
       color: var(--text);
-      font-weight: 500;
+      font-weight: 600;
     }
     .driver-value {
       font-size: 0.78rem;
       color: var(--muted);
-      font-weight: 300;
+      font-weight: 400;
       flex-shrink: 0;
     }
     .driver-chips {
@@ -471,28 +504,29 @@
     .driver-chip {
       font-size: 0.74rem;
       color: var(--muted);
-      font-weight: 300;
+      font-weight: 400;
     }
     .driver-chip strong {
       color: var(--text);
-      font-weight: 500;
+      font-weight: 600;
     }
- 
+
     /* ── Page footer disclaimer ── */
     .page-disclaimer {
       max-width: 1100px;
       margin: 3rem auto 0;
       padding: 0 1.5rem;
+      font-family: 'Inter', sans-serif;
       font-size: 0.72rem;
       font-style: italic;
-      color: #b0a898;
-      font-weight: 300;
+      color: var(--muted);
+      font-weight: 400;
       line-height: 1.6;
       text-align: center;
       border-top: 1px solid var(--border);
       padding-top: 1.5rem;
     }
- 
+
     @media (max-width: 640px) {
       .bars-wrap { gap: 1.25rem; }
       .driver-value { width: 100px; }
@@ -500,40 +534,41 @@
   </style>
 </head>
 <body>
- 
+
 <div class="hero">
+  <img class="hero-logo" src="everyday.rich.stacked.logo.rgb.red.png" alt="Everyday Rich" />
   <div class="hero-eyebrow">Compare Your Enough Numbers</div>
-  <h1>Which of your <em>enough</em> numbers best fits your life?</h1>
+  <h1>Which enough number best fits your life?</h1>
   <p>Build up to three scenarios — your current lifestyle and the changes you're weighing — and see the income that each requires, side by side.</p>
 </div>
- 
+
 <div class="page">
- 
+
   <div class="section-label" style="text-align:center; margin-bottom: 1rem;">Your Scenarios</div>
- 
+
   <div class="scenarios-row" id="scenariosRow"></div>
- 
+
   <div class="compare-btn-wrap">
     <button class="calc-btn" onclick="compareScenarios()">Compare My Enough Numbers →</button>
     <div class="tax-note">Taxes estimated using 2026 US federal brackets (married filing jointly), per IRS Revenue Procedure 2025-32. A 5% state income tax is added as a rough national average — actual state taxes vary. No state income tax applies in AK, FL, NV, NH, SD, TN, TX, WA, and WY. This estimate does not account for child tax credits or childcare tax credits, which may reduce your tax liability.</div>
   </div>
- 
+
   <div class="results-panel" id="resultsPanel">
     <div class="empty-state">
       <div class="icon">◎</div>
       <p>Fill in each scenario's monthly expenses,<br>then click <strong>Compare My Enough Numbers</strong>.</p>
     </div>
   </div>
- 
+
 </div>
- 
+
 <p class="page-disclaimer">This calculator is for educational purposes only and does not constitute financial advice. Individual financial situations vary, and readers should consider consulting a qualified financial professional before making major financial decisions.</p>
- 
+
 <script>
   // ── 2026 Federal tax: married filing jointly (IRS Rev. Proc. 2025-32) ──
   const STANDARD_DEDUCTION = 32200;
   const STATE_RATE = 0.05;
- 
+
   const BRACKETS = [
     { limit: 24800,    rate: 0.10 },
     { limit: 100800,   rate: 0.12 },
@@ -543,7 +578,7 @@
     { limit: 768700,   rate: 0.35 },
     { limit: Infinity, rate: 0.37 },
   ];
- 
+
   function federalTax(taxable) {
     if (taxable <= 0) return 0;
     let tax = 0, prev = 0;
@@ -554,12 +589,12 @@
     }
     return tax;
   }
- 
+
   function totalTaxFromGross(gross) {
     const taxable = Math.max(0, gross - STANDARD_DEDUCTION);
     return federalTax(taxable) + gross * STATE_RATE;
   }
- 
+
   function grossFromNet(netNeeded) {
     if (netNeeded <= 0) return 0;
     let lo = netNeeded, hi = netNeeded * 3;
@@ -570,16 +605,16 @@
     }
     return (lo + hi) / 2;
   }
- 
+
   function effectiveRate(gross) {
     if (gross <= 0) return 0;
     return (totalTaxFromGross(gross) / gross) * 100;
   }
- 
+
   function fmt(n) {
     return '$' + Math.round(Math.abs(n)).toLocaleString();
   }
- 
+
   // ── Scenario state ──────────────────────────────────────────────────
   const FIELDS = [
     { key: 'housing', label: 'Housing', hint: 'Rent/mortgage, utilities, property taxes, insurance, maintenance', placeholder: '1,500' },
@@ -588,23 +623,23 @@
     { key: 'childcare', label: 'Childcare', hint: '', placeholder: '800' },
     { key: 'other', label: 'Other Monthly Expenses', hint: "Healthcare, retirement savings, clothing, kids' activities, subscriptions, gifts", placeholder: '500' },
   ];
- 
-  const BAR_COLORS = ['var(--gold)', 'var(--gold-dim)', 'var(--muted)'];
- 
+
+  const BAR_COLORS = ['var(--terracotta)', 'var(--marigold)', 'var(--dusty-blue)'];
+
   let nextId = 2;
   let scenarios = [makeScenario('Current')];
- 
+
   function makeScenario(name, values) {
     const s = { id: 'scn' + (nextId++), name: name };
     FIELDS.forEach(f => { s[f.key] = values ? values[f.key] : ''; });
     return s;
   }
- 
+
   function renderScenarios() {
     const row = document.getElementById('scenariosRow');
     row.innerHTML = scenarios.map(s => scenarioCardHtml(s)).join('') + (scenarios.length < 3 ? addCardHtml() : '');
   }
- 
+
   function scenarioCardHtml(s) {
     const fieldsHtml = FIELDS.map(f => `
       <div class="field">
@@ -619,7 +654,7 @@
         </div>
       </div>
     `).join('');
- 
+
     return `
       <div class="scenario-card" id="card-${s.id}">
         <div class="scenario-header">
@@ -636,7 +671,7 @@
       </div>
     `;
   }
- 
+
   function addCardHtml() {
     return `
       <button class="add-scenario-card" onclick="addScenario()">
@@ -645,23 +680,23 @@
       </button>
     `;
   }
- 
+
   function updateValue(id, key, val) {
     const s = scenarios.find(sc => sc.id === id);
     if (s) s[key] = val;
   }
- 
+
   function updateName(id, name) {
     const s = scenarios.find(sc => sc.id === id);
     if (s) s.name = name;
   }
- 
+
   function addScenario() {
     if (scenarios.length >= 3) return;
     scenarios.push(makeScenario('Scenario ' + (scenarios.length + 1)));
     renderScenarios();
   }
- 
+
   function duplicateScenario(id) {
     if (scenarios.length >= 3) return;
     const src = scenarios.find(sc => sc.id === id);
@@ -669,13 +704,13 @@
     scenarios.push(makeScenario('Copy of ' + src.name, src));
     renderScenarios();
   }
- 
+
   function removeScenario(id) {
     if (scenarios.length <= 1) return;
     scenarios = scenarios.filter(sc => sc.id !== id);
     renderScenarios();
   }
- 
+
   // ── Compare ─────────────────────────────────────────────────────────
   function compareScenarios() {
     const computed = scenarios.map(s => {
@@ -686,12 +721,12 @@
       const effRate = effectiveRate(grossAnnual);
       return { ...s, monthlyTotal, annualNet, grossAnnual, grossMonthly, effRate };
     });
- 
+
     if (computed.every(c => c.monthlyTotal === 0)) {
       alert('Please enter at least one monthly expense in at least one scenario.');
       return;
     }
- 
+
     // Update mini results inline on each card
     computed.forEach(c => {
       const mini = document.getElementById('mini-' + c.id);
@@ -705,16 +740,16 @@
           : '';
       }
     });
- 
+
     renderResultsPanel(computed);
   }
- 
+
   function renderResultsPanel(computed) {
     const panel = document.getElementById('resultsPanel');
     panel.innerHTML = '';
- 
+
     const maxGross = Math.max(1, ...computed.map(c => c.grossAnnual));
- 
+
     const barsHtml = computed.map((c, i) => {
       const heightPct = maxGross > 0 ? (c.grossAnnual / maxGross) * 100 : 0;
       return `
@@ -728,7 +763,7 @@
         </div>
       `;
     }).join('');
- 
+
     const barsCard = document.createElement('div');
     barsCard.className = 'enough-card';
     barsCard.innerHTML = `
@@ -738,7 +773,7 @@
     `;
     panel.appendChild(barsCard);
     setTimeout(() => barsCard.classList.add('visible'), 30);
- 
+
     // Overall spread across ALL scenarios (not just a high/low pair)
     if (computed.length > 1) {
       let high = computed[0], low = computed[0];
@@ -746,11 +781,11 @@
         if (c.grossAnnual > high.grossAnnual) high = c;
         if (c.grossAnnual < low.grossAnnual) low = c;
       });
- 
+
       if (high.id !== low.id) {
         const monthlySpread = high.monthlyTotal - low.monthlyTotal;
         const annualSpread = high.grossAnnual - low.grossAnnual;
- 
+
         // For each category, look at every scenario's value (not just the two extremes)
         // so a category that varies across all three shows up, even if it isn't what
         // separates the single highest and lowest scenario.
@@ -761,7 +796,7 @@
           return { label: f.label, vals: vals, range: maxVal - minVal };
         }).filter(d => d.range > 0.001)
           .sort((a, b) => b.range - a.range);
- 
+
         const driverRowsHtml = drivers.slice(0, 5).map(d => {
           const valuesHtml = d.vals
             .map(v => `<span class="driver-chip">${v.name || 'Untitled'} <strong>${fmt(v.val)}</strong></span>`)
@@ -776,7 +811,7 @@
             </div>
           `;
         }).join('');
- 
+
         const breakdownCard = document.createElement('div');
         breakdownCard.className = 'breakdown-card';
         breakdownCard.innerHTML = `
@@ -794,9 +829,9 @@
       }
     }
   }
- 
+
   renderScenarios();
 </script>
- 
+
 </body>
 </html>
