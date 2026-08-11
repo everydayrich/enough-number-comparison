@@ -101,12 +101,64 @@
       line-height: 1.7;
     }
 
+    .hero-examples {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-style: italic;
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0.9rem auto 0;
+      line-height: 1.7;
+    }
+
+    .hero-examples strong {
+      font-style: normal;
+      font-weight: 600;
+      color: var(--terracotta);
+    }
+
     /* ── Page layout ── */
     .page {
       max-width: 1100px;
       margin: 0 auto;
       padding: 0 1.5rem;
     }
+
+    .shared-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      max-width: 620px;
+      margin: 0 auto 1.75rem;
+    }
+
+    .toggle-wrap {
+      display: flex;
+      background: var(--surface2);
+      border-radius: var(--radius-sm);
+      padding: 3px;
+      width: fit-content;
+      margin-bottom: 0;
+      flex-wrap: wrap;
+      gap: 3px;
+    }
+
+    .tbtn {
+      font-family: 'Lexend', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+      color: var(--muted);
+      background: transparent;
+    }
+
+    .tbtn.on { background: var(--espresso); color: var(--bg); }
 
     .section-label {
       font-family: 'Inter', sans-serif;
@@ -186,6 +238,19 @@
       font-size: 0.75rem;
       color: var(--muted);
       pointer-events: none;
+    }
+
+    .input-wrap.no-prefix input { padding-left: 1rem; }
+
+    /* Remove number input spinner arrows */
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type="number"] {
+      -moz-appearance: textfield;
+      appearance: textfield;
     }
 
     .divider {
@@ -280,6 +345,103 @@
       opacity: 0.75;
     }
     .remove-btn:hover { opacity: 1; }
+
+    /* ── Custom (user-added) expense fields ── */
+    .custom-field {
+      margin-bottom: 1.1rem;
+    }
+
+    .custom-field-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .custom-label-input {
+      display: block;
+      width: 100%;
+      flex: 1;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.74rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border: none;
+      background: none;
+      border-bottom: 1px solid transparent;
+      padding: 0.1rem 0;
+    }
+
+    .custom-label-input:hover,
+    .custom-label-input:focus {
+      outline: none;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .custom-label-input::placeholder {
+      color: #cbb896;
+      text-transform: none;
+      font-weight: 400;
+    }
+
+    .other-hint-input {
+      display: block;
+      width: 100%;
+      font-family: 'Lexend', sans-serif;
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-weight: 400;
+      line-height: 1.5;
+      border: none;
+      background: none;
+      border-bottom: 1px solid transparent;
+      padding: 0.1rem 0;
+      margin-top: 0.35rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .other-hint-input:hover,
+    .other-hint-input:focus {
+      outline: none;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .other-hint-input::placeholder {
+      color: #cbb896;
+    }
+
+    .remove-custom-btn {
+      border: none;
+      background: none;
+      color: var(--terracotta);
+      font-size: 1.1rem;
+      line-height: 1;
+      cursor: pointer;
+      flex-shrink: 0;
+      padding: 0 0.15rem;
+      opacity: 0.6;
+    }
+    .remove-custom-btn:hover { opacity: 1; }
+
+    .add-field-btn {
+      width: 100%;
+      padding: 0.55rem;
+      margin-bottom: 0.5rem;
+      background: none;
+      border: 1.5px dashed var(--border);
+      border-radius: var(--radius-sm);
+      font-family: 'Lexend', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .add-field-btn:hover { border-color: var(--terracotta); color: var(--terracotta); }
 
     .mini-result {
       margin-top: 0.5rem;
@@ -406,16 +568,20 @@
       display: flex;
       align-items: flex-end;
       justify-content: center;
-      gap: 2.5rem;
+      gap: clamp(1rem, 5vw, 2.5rem);
       height: 220px;
-      padding: 0 1rem;
+      padding: 0 clamp(0.5rem, 4vw, 1.5rem);
+      margin: 0 auto;
       overflow-x: auto;
     }
     .bar-col {
       display: flex;
       flex-direction: column;
       align-items: center;
+      width: 110px;
       min-width: 90px;
+      max-width: 130px;
+      flex: 0 0 auto;
       height: 100%;
     }
     .bar-amount {
@@ -424,6 +590,8 @@
       font-weight: 600;
       color: var(--text);
       margin-bottom: 0.5rem;
+      text-align: center;
+      flex-shrink: 0;
     }
     .bar-track {
       flex: 1;
@@ -432,13 +600,24 @@
       align-items: flex-end;
     }
     .bar-fill { width: 100%; border-radius: 6px 6px 0 0; transition: height 0.4s ease; min-height: 2px; }
-    .bar-ground { width: 100%; height: 2px; background: var(--text); opacity: 0.12; }
+    .bar-ground { width: 100%; height: 2px; background: var(--text); opacity: 0.12; flex-shrink: 0; }
     .bar-label {
       margin-top: 0.6rem;
       font-size: 0.78rem;
       font-weight: 500;
       color: var(--text);
       text-align: center;
+      white-space: normal;
+      overflow-wrap: break-word;
+      word-break: break-word;
+      line-height: 1.3;
+      flex-shrink: 0;
+      height: 2.05rem;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
     }
 
     .breakdown-title {
@@ -528,7 +707,6 @@
     }
 
     @media (max-width: 640px) {
-      .bars-wrap { gap: 1.25rem; }
       .driver-value { width: 100px; }
     }
   </style>
@@ -540,9 +718,29 @@
   <div class="hero-eyebrow">Compare Your Enough Numbers</div>
   <h1>Which enough number best fits your life?</h1>
   <p>Build up to three scenarios — your current lifestyle and the changes you're weighing — and see the income that each requires, side by side.</p>
+  <p class="hero-examples">Try scenarios like <strong>Current</strong>, <strong>Smaller Home</strong>, and <strong>One Car &amp; Smaller Home</strong> — or <strong>Current</strong>, <strong>One Income</strong>, and <strong>Second Flexible Income</strong>.</p>
 </div>
 
 <div class="page">
+
+  <div class="shared-card" id="taxSettingsCard">
+    <div class="section-label">State Tax Assumption</div>
+    <div class="field-hint" style="margin-top:-0.6rem; margin-bottom: 1rem;">Applied on top of federal tax when estimating each "enough number." Federal brackets stay fixed — this only adjusts the state portion.</div>
+    <div class="toggle-wrap">
+      <button class="tbtn on" id="stateModeAvgBtn" onclick="setStateMode('average')">Use national average (5%)</button>
+      <button class="tbtn" id="stateModeCustomBtn" onclick="setStateMode('custom')">Enter my own state rate</button>
+    </div>
+    <div id="customStateRateWrap" style="display:none; margin-top: 1.1rem;">
+      <div class="field" style="margin-bottom: 0;">
+        <label>Your State Income Tax Rate</label>
+        <div class="field-hint">e.g. Tennessee, Florida, and Texas residents can enter 0% — nine states have no state income tax</div>
+        <div class="input-wrap no-prefix">
+          <input type="number" id="customStateRateInput" min="0" max="20" step="0.1" placeholder="0" oninput="updateCustomStateRate(this.value)" />
+          <span class="input-suffix">%</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="section-label" style="text-align:center; margin-bottom: 1rem;">Your Scenarios</div>
 
@@ -550,7 +748,7 @@
 
   <div class="compare-btn-wrap">
     <button class="calc-btn" onclick="compareScenarios()">Compare My Enough Numbers →</button>
-    <div class="tax-note">Taxes estimated using 2026 US federal brackets (married filing jointly), per IRS Revenue Procedure 2025-32. A 5% state income tax is added as a rough national average — actual state taxes vary. No state income tax applies in AK, FL, NV, NH, SD, TN, TX, WA, and WY. This estimate does not account for child tax credits or childcare tax credits, which may reduce your tax liability.</div>
+    <div class="tax-note">Taxes estimated using 2026 US federal brackets (married filing jointly), per IRS Revenue Procedure 2025-32, plus the state tax rate set above (5% national average by default). This estimate does not account for child tax credits or childcare tax credits, which may reduce your tax liability.</div>
   </div>
 
   <div class="results-panel" id="resultsPanel">
@@ -567,7 +765,29 @@
 <script>
   // ── 2026 Federal tax: married filing jointly (IRS Rev. Proc. 2025-32) ──
   const STANDARD_DEDUCTION = 32200;
-  const STATE_RATE = 0.05;
+  const DEFAULT_STATE_RATE = 0.05;
+
+  let stateTaxMode = 'average'; // 'average' | 'custom'
+  let customStateRatePct = '';
+
+  function setStateMode(mode) {
+    stateTaxMode = mode;
+    document.getElementById('stateModeAvgBtn').classList.toggle('on', mode === 'average');
+    document.getElementById('stateModeCustomBtn').classList.toggle('on', mode === 'custom');
+    document.getElementById('customStateRateWrap').style.display = mode === 'custom' ? 'block' : 'none';
+  }
+
+  function updateCustomStateRate(val) {
+    customStateRatePct = val;
+  }
+
+  function getStateRate() {
+    if (stateTaxMode === 'custom') {
+      const pct = parseFloat(customStateRatePct);
+      return (!isNaN(pct) && pct >= 0) ? pct / 100 : 0;
+    }
+    return DEFAULT_STATE_RATE;
+  }
 
   const BRACKETS = [
     { limit: 24800,    rate: 0.10 },
@@ -592,7 +812,7 @@
 
   function totalTaxFromGross(gross) {
     const taxable = Math.max(0, gross - STANDARD_DEDUCTION);
-    return federalTax(taxable) + gross * STATE_RATE;
+    return federalTax(taxable) + gross * getStateRate();
   }
 
   function grossFromNet(netNeeded) {
@@ -621,17 +841,28 @@
     { key: 'food', label: 'Food', hint: 'Groceries and takeout', placeholder: '600' },
     { key: 'transport', label: 'Transportation', hint: 'Gas, insurance, maintenance, car payments', placeholder: '400' },
     { key: 'childcare', label: 'Childcare', hint: '', placeholder: '800' },
-    { key: 'other', label: 'Other Monthly Expenses', hint: "Healthcare, retirement savings, clothing, kids' activities, subscriptions, gifts", placeholder: '500' },
   ];
+
+  const DEFAULT_OTHER_LABEL = 'Other Monthly Expenses';
+  const DEFAULT_OTHER_HINT = "Healthcare, retirement savings, clothing, kids' activities, subscriptions, gifts";
 
   const BAR_COLORS = ['var(--terracotta)', 'var(--marigold)', 'var(--dusty-blue)'];
 
   let nextId = 2;
+  let nextCustomId = 1;
   let scenarios = [makeScenario('Current')];
 
   function makeScenario(name, values) {
-    const s = { id: 'scn' + (nextId++), name: name };
+    const s = {
+      id: 'scn' + (nextId++), name: name, custom: [],
+      other: values ? values.other : '',
+      otherLabel: (values && values.otherLabel) || DEFAULT_OTHER_LABEL,
+      otherHint: (values && values.otherHint !== undefined) ? values.otherHint : DEFAULT_OTHER_HINT,
+    };
     FIELDS.forEach(f => { s[f.key] = values ? values[f.key] : ''; });
+    if (values && values.custom) {
+      s.custom = values.custom.map(c => ({ id: 'cf' + (nextCustomId++), label: c.label, value: c.value }));
+    }
     return s;
   }
 
@@ -655,6 +886,37 @@
       </div>
     `).join('');
 
+    const otherFieldHtml = `
+      <div class="field">
+        <input type="text" class="custom-label-input" value="${s.otherLabel}"
+               oninput="updateOtherLabel('${s.id}',this.value)" aria-label="Other expenses category name" />
+        <input type="text" class="other-hint-input" value="${s.otherHint}"
+               oninput="updateOtherHint('${s.id}',this.value)" aria-label="Other expenses description" />
+        <div class="input-wrap">
+          <span class="input-prefix">$</span>
+          <input type="number" min="0" placeholder="500"
+                 value="${s.other}" oninput="updateValue('${s.id}','other',this.value)" />
+          <span class="input-suffix">/ mo</span>
+        </div>
+      </div>
+    `;
+
+    const customFieldsHtml = (s.custom || []).map(c => `
+      <div class="custom-field">
+        <div class="custom-field-row">
+          <input type="text" class="custom-label-input" placeholder="Custom expense name"
+                 value="${c.label}" oninput="updateCustomLabel('${s.id}','${c.id}',this.value)" />
+          <button class="remove-custom-btn" onclick="removeCustomField('${s.id}','${c.id}')" title="Remove">×</button>
+        </div>
+        <div class="input-wrap">
+          <span class="input-prefix">$</span>
+          <input type="number" min="0" placeholder="0"
+                 value="${c.value}" oninput="updateCustomValue('${s.id}','${c.id}',this.value)" />
+          <span class="input-suffix">/ mo</span>
+        </div>
+      </div>
+    `).join('');
+
     return `
       <div class="scenario-card" id="card-${s.id}">
         <div class="scenario-header">
@@ -662,6 +924,9 @@
           ${scenarios.length > 1 ? `<button class="remove-btn" onclick="removeScenario('${s.id}')" title="Remove">×</button>` : ''}
         </div>
         ${fieldsHtml}
+        ${otherFieldHtml}
+        ${customFieldsHtml}
+        <button class="add-field-btn" onclick="addCustomField('${s.id}')">+ Add another expense</button>
         <div class="mini-result" id="mini-${s.id}" style="display:none;">
           <div class="mini-result-label">Enough number (gross)</div>
           <div class="mini-result-value" id="mini-val-${s.id}"></div>
@@ -691,6 +956,45 @@
     if (s) s.name = name;
   }
 
+  function updateOtherLabel(id, label) {
+    const s = scenarios.find(sc => sc.id === id);
+    if (s) s.otherLabel = label;
+  }
+
+  function updateOtherHint(id, hint) {
+    const s = scenarios.find(sc => sc.id === id);
+    if (s) s.otherHint = hint;
+  }
+
+  function addCustomField(id) {
+    const s = scenarios.find(sc => sc.id === id);
+    if (!s) return;
+    if (!s.custom) s.custom = [];
+    s.custom.push({ id: 'cf' + (nextCustomId++), label: '', value: '' });
+    renderScenarios();
+  }
+
+  function updateCustomLabel(id, fieldId, label) {
+    const s = scenarios.find(sc => sc.id === id);
+    if (!s) return;
+    const f = (s.custom || []).find(c => c.id === fieldId);
+    if (f) f.label = label;
+  }
+
+  function updateCustomValue(id, fieldId, val) {
+    const s = scenarios.find(sc => sc.id === id);
+    if (!s) return;
+    const f = (s.custom || []).find(c => c.id === fieldId);
+    if (f) f.value = val;
+  }
+
+  function removeCustomField(id, fieldId) {
+    const s = scenarios.find(sc => sc.id === id);
+    if (!s) return;
+    s.custom = (s.custom || []).filter(c => c.id !== fieldId);
+    renderScenarios();
+  }
+
   function addScenario() {
     if (scenarios.length >= 3) return;
     scenarios.push(makeScenario('Scenario ' + (scenarios.length + 1)));
@@ -714,7 +1018,10 @@
   // ── Compare ─────────────────────────────────────────────────────────
   function compareScenarios() {
     const computed = scenarios.map(s => {
-      const monthlyTotal = FIELDS.reduce((sum, f) => sum + (parseFloat(s[f.key]) || 0), 0);
+      const fixedTotal = FIELDS.reduce((sum, f) => sum + (parseFloat(s[f.key]) || 0), 0);
+      const otherTotal = parseFloat(s.other) || 0;
+      const customTotal = (s.custom || []).reduce((sum, c) => sum + (parseFloat(c.value) || 0), 0);
+      const monthlyTotal = fixedTotal + otherTotal + customTotal;
       const annualNet = monthlyTotal * 12;
       const grossAnnual = grossFromNet(annualNet);
       const grossMonthly = grossAnnual / 12;
@@ -759,7 +1066,7 @@
             <div class="bar-fill" style="height:${heightPct}%; background:${BAR_COLORS[i % BAR_COLORS.length]};"></div>
           </div>
           <div class="bar-ground"></div>
-          <div class="bar-label">${c.name || 'Untitled'}</div>
+          <div class="bar-label" title="${c.name || 'Untitled'}">${c.name || 'Untitled'}</div>
         </div>
       `;
     }).join('');
@@ -786,16 +1093,44 @@
         const monthlySpread = high.monthlyTotal - low.monthlyTotal;
         const annualSpread = high.grossAnnual - low.grossAnnual;
 
-        // For each category, look at every scenario's value (not just the two extremes)
+        // For each fixed category, look at every scenario's value (not just the two extremes)
         // so a category that varies across all three shows up, even if it isn't what
         // separates the single highest and lowest scenario.
-        const drivers = FIELDS.map(f => {
+        const fixedDrivers = FIELDS.map(f => {
           const vals = computed.map(c => ({ name: c.name, val: parseFloat(c[f.key]) || 0 }));
           const maxVal = Math.max(...vals.map(v => v.val));
           const minVal = Math.min(...vals.map(v => v.val));
           return { label: f.label, vals: vals, range: maxVal - minVal };
-        }).filter(d => d.range > 0.001)
-          .sort((a, b) => b.range - a.range);
+        }).filter(d => d.range > 0.001);
+
+        // "Other" (renameable per scenario) + custom fields: group by matching (trimmed,
+        // case-insensitive) label across scenarios so same-named categories compare as one row.
+        const customLabelMap = new Map();
+        computed.forEach(c => {
+          const otherLabel = (c.otherLabel || DEFAULT_OTHER_LABEL).trim();
+          const otherKey = otherLabel.toLowerCase();
+          if (otherKey) {
+            if (!customLabelMap.has(otherKey)) customLabelMap.set(otherKey, { label: otherLabel, byScenario: {} });
+            const otherEntry = customLabelMap.get(otherKey);
+            otherEntry.byScenario[c.id] = (otherEntry.byScenario[c.id] || 0) + (parseFloat(c.other) || 0);
+          }
+          (c.custom || []).forEach(cf => {
+            const key = (cf.label || '').trim().toLowerCase();
+            if (!key) return;
+            if (!customLabelMap.has(key)) customLabelMap.set(key, { label: cf.label.trim(), byScenario: {} });
+            const entry = customLabelMap.get(key);
+            entry.byScenario[c.id] = (entry.byScenario[c.id] || 0) + (parseFloat(cf.value) || 0);
+          });
+        });
+
+        const customDrivers = Array.from(customLabelMap.values()).map(entry => {
+          const vals = computed.map(c => ({ name: c.name, val: entry.byScenario[c.id] || 0 }));
+          const maxVal = Math.max(...vals.map(v => v.val));
+          const minVal = Math.min(...vals.map(v => v.val));
+          return { label: entry.label, vals: vals, range: maxVal - minVal };
+        }).filter(d => d.range > 0.001);
+
+        const drivers = fixedDrivers.concat(customDrivers).sort((a, b) => b.range - a.range);
 
         const driverRowsHtml = drivers.slice(0, 5).map(d => {
           const valuesHtml = d.vals
